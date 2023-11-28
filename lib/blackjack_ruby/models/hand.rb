@@ -16,8 +16,10 @@ module BlackjackRuby
         any_ace_card? && any_face_card?
       end
 
-        (first_card_val.ace_card? && second_card_val.face_card?) ||
-          (first_card_val.face_card? && second_card_val.ace_card?)
+      def soft_seventeen?
+        return false unless two_cards?
+
+        scores.any? { |s| s == 17 } && any_ace_card?
       end
 
       def best_score
