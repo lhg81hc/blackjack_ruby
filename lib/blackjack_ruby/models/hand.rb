@@ -3,7 +3,7 @@ module BlackjackRuby
     class Hand
       BUST_VALUE = 21
 
-      attr_reader :cards, :card_values
+      attr_accessor :cards, :card_values
 
       def initialize(cards)
         @cards = cards
@@ -69,6 +69,17 @@ module BlackjackRuby
 
       def any_face_card?
         card_values.any? { |cv| cv.face_card? }
+      end
+
+      # 'Hit me!'
+      def add_card(new_card)
+        @cards << new_card
+        @card_values << CardValue.new(new_card)
+
+        # Reset memoized values
+        @card_scores = nil
+        @scores = nil
+        @best_score = nil
       end
     end
   end
