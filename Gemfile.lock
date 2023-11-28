@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:lhg81hc/deck_of_cards_ruby.git
-  revision: 2c4ea58e34c40d765eaee4f92764eecee34e204f
+  revision: c342a4474841fd85f7149aecd2824940636184b4
   specs:
     deck_of_cards_ruby (0.1.0)
 
@@ -62,4 +62,4 @@ DEPENDENCIES
   rubocop (~> 1.21)
 
 BUNDLED WITH
-   2.4.10
+   2.4.22
