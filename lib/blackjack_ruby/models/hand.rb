@@ -21,27 +21,42 @@ module BlackjackRuby
       end
 
       def best_score
-        best = scores.first.sum
+        @best_score ||=
+          begin
+            best = scores.first
 
-        scores.each do |s|
-          sum = s.sum
-          next unless sum <= 21
+            scores.each do |s|
+              best = s if s <= 21 && s > best
+            end
 
-          best = sum if sum > best
-        end
-
-        best
+            best
+          end
       end
 
       def busted?
-        scores.all? { |s| s.sum > BUST_VALUE }
+        scores.all? { |s| s > BUST_VALUE }
       end
 
+      # Eg:
+      # 'A3' => [3, 13]
+      # 'AA' => [2, 12, 22]
+      # '54' => [9]
       def scores
-        individual_card_scores = card_values.map { |c| c.scores }
+        @scores ||=
+          card_scores[0].
+          product(*card_scores[1..-1]).
+          map(&:sum).
+          uniq
+      end
 
-        first_card_scores = individual_card_scores[0]
-        first_card_scores.product(*individual_card_scores[1..-1])
+      # Eg:
+      # 'A3' => [[1, 11], [3]]
+      # 'AA' => [[1, 11], [1, 11]]
+      # '54' => [[5], [4]]
+      def card_scores
+        @card_scores ||= card_values.map { |c| c.scores }
+      end
+
       def two_cards?
         cards.count == 2
       end
