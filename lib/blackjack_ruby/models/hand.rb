@@ -28,7 +28,11 @@ module BlackjackRuby
             best = scores.first
 
             scores.each do |s|
-              best = s if s <= 21 && s > best
+              if best > 21 && s <= 21
+                best = s
+              elsif s <= 21 && s > best
+                best = s
+              end
             end
 
             best
