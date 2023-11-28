@@ -11,10 +11,10 @@ module BlackjackRuby
       end
 
       def blackjack?
-        return false unless cards.count == 2
+        return false unless two_cards?
 
-        first_card_val = card_values[0]
-        second_card_val = card_values[1]
+        any_ace_card? && any_face_card?
+      end
 
         (first_card_val.ace_card? && second_card_val.face_card?) ||
           (first_card_val.face_card? && second_card_val.ace_card?)
@@ -42,6 +42,16 @@ module BlackjackRuby
 
         first_card_scores = individual_card_scores[0]
         first_card_scores.product(*individual_card_scores[1..-1])
+      def two_cards?
+        cards.count == 2
+      end
+
+      def any_ace_card?
+        card_values.any? { |cv| cv.ace_card? }
+      end
+
+      def any_face_card?
+        card_values.any? { |cv| cv.face_card? }
       end
     end
   end
