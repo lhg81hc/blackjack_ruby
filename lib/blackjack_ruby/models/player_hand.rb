@@ -39,6 +39,10 @@ module BlackjackRuby
         !blackjack? && scores.any? { |s| s == 21 }
       end
 
+      def splitable?
+        two_cards? && identical_score_cards?
+      end
+
       def only_one_option?
         options.count == 1
       end
