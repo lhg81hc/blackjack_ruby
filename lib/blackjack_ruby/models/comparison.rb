@@ -6,6 +6,8 @@ module BlackjackRuby
       def initialize(dealer_hand: nil, player_hand: nil)
         @dealer_hand = dealer_hand
         @player_hand = player_hand
+
+        validate
       end
 
       def both_blackjack?
@@ -47,6 +49,10 @@ module BlackjackRuby
         else
           nil
         end
+      end
+
+      def validate
+        raise "Dealer hand and Player hand must be present" if dealer_hand.nil? || player_hand.nil?
       end
     end
   end
