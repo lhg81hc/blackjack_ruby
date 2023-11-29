@@ -1,18 +1,28 @@
 module BlackjackRuby
   module Models
     class DealerHand < Hand
-      # 0 => 'Stay'
-      # 1 => 'Hit'
       def options
-        if blackjack? || enough? || busted?
+        if must_stay?
           return [0]
         end
 
-        [1]
+        if must_hit?
+          return [1]
+        end
+
+        raise "Unknown known hand: #{cards.map(&:to_encoded_unicode).join(' ')}"
       end
 
       def enough?
         scores.any? { |s| s >= 17 && s <= 21 }
+      end
+
+      def must_hit?
+        !blackjack? && best_score < 17
+      end
+
+      def must_stay?
+        blackjack? || busted? || enough?
       end
 
       def only_one_option?
