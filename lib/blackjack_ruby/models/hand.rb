@@ -67,6 +67,18 @@ module BlackjackRuby
         cards.count == 2
       end
 
+      def pair?
+        two_cards? && identical_rank_cards?
+      end
+
+      def identical_score_cards?
+        card_scores.uniq.count == 1
+      end
+
+      def identical_rank_cards?
+        @card_values.map(&:rank).uniq.count == 1
+      end
+
       def any_ace_card?
         card_values.any? { |cv| cv.ace_card? }
       end
