@@ -7,7 +7,7 @@ module BlackjackRuby
         @card = card
       end
 
-      def face_card?
+      def face_card_or_ten_card?
         ['10', 'j', 'q', 'k'].include?(rank)
       end
 
@@ -20,7 +20,7 @@ module BlackjackRuby
       end
 
       def scores
-        if face_card?
+        if face_card_or_ten_card?
           [10]
         elsif ace_card?
           [1, 11]

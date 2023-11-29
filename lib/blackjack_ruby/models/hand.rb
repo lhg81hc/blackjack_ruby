@@ -13,7 +13,7 @@ module BlackjackRuby
       def blackjack?
         return false unless two_cards?
 
-        any_ace_card? && any_face_card?
+        any_ace_card? && any_face_card_or_ten_card?
       end
 
       def soft_seventeen?
@@ -71,8 +71,8 @@ module BlackjackRuby
         card_values.any? { |cv| cv.ace_card? }
       end
 
-      def any_face_card?
-        card_values.any? { |cv| cv.face_card? }
+      def any_face_card_or_ten_card?
+        card_values.any? { |cv| cv.face_card_or_ten_card? }
       end
 
       # 'Hit me!'
