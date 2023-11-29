@@ -15,8 +15,8 @@ module BlackjackRuby
       end
 
       def same_best_score?
-        !dealer_hand.busted? &&
-          !dealer_hand.blackjack? &&
+        !(dealer_hand.busted? || player_hand.busted?) &&
+          !(dealer_hand.blackjack? || player_hand.blackjack?) &&
           dealer_hand.best_score == player_hand.best_score
       end
 
@@ -26,16 +26,24 @@ module BlackjackRuby
 
       alias :tie? :push?
 
-      # 0 => Dealer wins
-      # 1 => Player wins
-      # 2 => Push
       def winner
-        return 2 if push?
-        return 0 if dealer_hand.blackjack?
-        return 0 if player_hand.busted?
-        return 0 if !dealer_hand.busted? && dealer_hand.best_score > player_hand.best_score
+        # return 0 if player_hand.busted?
+        # return 1 if player_hand.blackjack?
+        # return 1 if !player_hand.busted? && player_hand.five_cards?
 
-        1
+        if dealer_wins?
+          0
+        elsif push?
+          2
+        else
+          1
+        end
+      end
+
+      def dealer_wins?
+        player_hand.busted? ||
+          (!player_hand.blackjack? && dealer_hand.blackjack?) ||
+          (!dealer_hand.busted? && dealer_hand.best_score > player_hand.best_score)
       end
 
       def winner_full
