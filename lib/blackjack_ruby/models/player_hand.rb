@@ -40,7 +40,7 @@ module BlackjackRuby
       end
 
       def payout_odds
-        blackjack? ? (initial_payout_odds * 3 / 2) : initial_payout_odds
+        blackjack? ? (initial_payout_odds.to_f * 3 / 2) : initial_payout_odds.to_f
       end
     end
   end
