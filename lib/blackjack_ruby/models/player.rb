@@ -15,20 +15,22 @@ module BlackjackRuby
         raise 'Hand not found' unless hand
         raise 'Hand is invalid to split' unless hand.options['split']
 
-        new_hands =
-          hand.cards.map do |card|
-            new_hand = PlayerHand.new([card])
-            new_hand.bet = hand.bet
-            new_hand
-          end
+        hand.cards.map.with_index do |card, index|
+          new_hand = PlayerHand.new([card])
+          new_hand.bet = hand.bet
 
-        new_hands.each_with_index do |new_hand, index|
           hands.insert(hand_index + index, new_hand)
         end
       end
 
-      def double(hand)
+      def double(hand_index)
+        hand = hands[hand_index]
+
+        raise 'Hand not found' unless hand
         raise 'Hand is invalid to double' unless hand.options['double']
+
+        hand.bet = hand.bet * 2
+        hand.doubled = true
       end
     end
   end
