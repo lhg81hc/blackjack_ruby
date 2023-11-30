@@ -9,7 +9,7 @@ require 'blackjack_ruby/models/play'
 require 'blackjack_ruby/models/hand'
 require 'blackjack_ruby/models/dealer_hand'
 require 'blackjack_ruby/models/player_hand'
-require 'blackjack_ruby/models/comparison'
+require 'blackjack_ruby/models/hand_comparison'
 
 module BlackjackRuby
   class Error < StandardError; end

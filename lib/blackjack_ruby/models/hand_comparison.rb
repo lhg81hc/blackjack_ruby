@@ -1,6 +1,12 @@
 module BlackjackRuby
   module Models
-    class Comparison
+    class HandComparison
+      WINNER_TRANSLATIONS = {
+        0 => 'Dealer',
+        1 => 'Player',
+        2 => 'Tie'
+      }.freeze
+
       attr_reader :dealer_hand, :player_hand
 
       def initialize(dealer_hand: nil, player_hand: nil)
@@ -35,7 +41,7 @@ module BlackjackRuby
           0
         elsif push?
           2
-        else
+        else # Player wins
           1
         end
       end
@@ -46,17 +52,8 @@ module BlackjackRuby
           (!dealer_hand.busted? && dealer_hand.best_score > player_hand.best_score)
       end
 
-      def winner_full
-        case winner
-        when 0
-          'Dealer'
-        when 1
-          'Player'
-        when 2
-          'Tie'
-        else
-          nil
-        end
+      def winner_translation
+        WINNER_TRANSLATIONS[winner]
       end
 
       def validate
