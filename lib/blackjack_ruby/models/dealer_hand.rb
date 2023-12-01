@@ -15,11 +15,20 @@ module BlackjackRuby
       end
 
       def enough?
-        scores.any? { |s| s >= 17 && s <= 21 }
+        # TODO: Add option to include soft_seventeen? or not
+        soft_seventeen? || hard_seventeen? || scores.any? { |s| s > 17 && s <= 21 }
       end
 
       def can_stay?
         blackjack? || busted? || enough?
+      end
+
+      def hard_seventeen?
+        (more_than_two_cards? || (two_cards? && any_face_card_or_ten_card?)) && scores.any? { |s| s == 17 }
+      end
+
+      def soft_seventeen?
+        two_cards? && any_ace_card? && scores.any? { |s| s == 17 }
       end
     end
   end
