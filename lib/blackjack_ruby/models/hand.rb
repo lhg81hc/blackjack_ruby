@@ -16,10 +16,8 @@ module BlackjackRuby
         any_ace_card? && any_face_card_or_ten_card?
       end
 
-      def soft_seventeen?
-        return false unless two_cards?
-
-        scores.any? { |s| s == 17 } && any_ace_card?
+      def five_card_charlie?
+        five_cards? && scores.any? { |s| s <= 21 }
       end
 
       def best_score
@@ -65,6 +63,14 @@ module BlackjackRuby
 
       def two_cards?
         cards.count == 2
+      end
+
+      def more_than_two_cards?
+        cards.count > 2
+      end
+
+      def five_cards?
+        cards.count == 5
       end
 
       def pair?
