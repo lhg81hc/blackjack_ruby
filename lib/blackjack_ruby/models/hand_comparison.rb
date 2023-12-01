@@ -21,7 +21,8 @@ module BlackjackRuby
       end
 
       def same_best_score?
-        !(dealer_hand.busted? || player_hand.busted?) &&
+        !player_hand.five_card_charlie? &&
+          !(dealer_hand.busted? || player_hand.busted?) &&
           !(dealer_hand.blackjack? || player_hand.blackjack?) &&
           dealer_hand.best_score == player_hand.best_score
       end
@@ -47,13 +48,20 @@ module BlackjackRuby
       end
 
       def dealer_wins?
-        player_hand.busted? ||
-          (!player_hand.blackjack? && dealer_hand.blackjack?) ||
-          (!dealer_hand.busted? && dealer_hand.best_score > player_hand.best_score)
+        !player_wins? &&
+          (
+            player_hand.busted? ||
+            (!player_hand.blackjack? && dealer_hand.blackjack?) ||
+            (!dealer_hand.busted? && dealer_hand.best_score > player_hand.best_score)
+          )
       end
 
       def winner_translation
         WINNER_TRANSLATIONS[winner]
+      end
+
+      def player_wins?
+        player_hand.five_card_charlie?
       end
 
       def validate
