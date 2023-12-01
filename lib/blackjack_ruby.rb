@@ -11,6 +11,7 @@ require 'blackjack_ruby/models/dealer_hand'
 require 'blackjack_ruby/models/player_hand'
 require 'blackjack_ruby/models/hand_comparison'
 require 'blackjack_ruby/models/player'
+require 'blackjack_ruby/strategies/hard_totals_strategy'
 
 module BlackjackRuby
   class Error < StandardError; end
