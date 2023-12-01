@@ -11,6 +11,8 @@ require 'blackjack_ruby/models/dealer_hand'
 require 'blackjack_ruby/models/player_hand'
 require 'blackjack_ruby/models/hand_comparison'
 require 'blackjack_ruby/models/player'
+require 'blackjack_ruby/strategies/base'
+require 'blackjack_ruby/strategies/pair_splitting_strategy'
 require 'blackjack_ruby/strategies/hard_totals_strategy'
 
 module BlackjackRuby
