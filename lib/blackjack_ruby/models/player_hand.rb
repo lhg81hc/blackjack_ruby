@@ -32,7 +32,8 @@ module BlackjackRuby
       end
 
       def can_double?
-        two_cards? && can_hit?
+        # TODO: Add two_card? condition
+        can_hit?
       end
 
       def doubled?
