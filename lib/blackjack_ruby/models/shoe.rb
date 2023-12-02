@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'deck_of_cards_ruby'
 
 module BlackjackRuby
   module Models
+    # Represent a shoe which can have multiple deck of cards
     class Shoe
       extend Forwardable
 
@@ -25,14 +28,14 @@ module BlackjackRuby
         when 'bottom'
           pop
         else
-          raise "Invalid `draw position' argument"
+          raise "Invalid 'draw position' argument"
         end
       end
 
       def take_cards(number_of_cards = 1)
         raise "Must take at least 1 card" if number_of_cards < 1
 
-        (1..number_of_cards).to_a.map { |_n| take_a_card }
+        Array.new(number_of_cards) { take_a_card }
       end
 
       def take_a_card
@@ -50,20 +53,12 @@ module BlackjackRuby
         idx && @list.delete_at(idx)
       end
 
-      def to_s
-        @list.map(&:to_s).join(', ')
-      end
-
-      def to_unicode
-        @list.map(&:to_encoded_unicode).join('  ')
-      end
-
       private
 
       def generate_shoe
         raise "Shoe must contain at least one deck of card" if number_of_decks < 1
 
-        (1..number_of_decks).map { |_n| DeckOfCardsRuby::Deck.new.remaining }.flatten
+        Array.new(number_of_decks, DeckOfCardsRuby::Deck.new.remaining).flatten
       end
     end
   end
