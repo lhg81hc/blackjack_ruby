@@ -18,7 +18,8 @@ module BlackjackRuby
       end
 
       def player_card_to_s
-        player_hand.card_values.sort_by(&:best_score).reverse.map(&:blackjack_rank).join(',')
+        @player_card_to_s ||=
+          player_hand.card_values.sort_by(&:best_score).reverse.map(&:blackjack_rank).join(',')
       end
     end
   end
