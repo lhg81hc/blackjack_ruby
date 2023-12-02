@@ -4,10 +4,12 @@ module BlackjackRuby
       BUST_VALUE = 21
 
       attr_accessor :cards, :card_values
+      attr_accessor :cards, :card_values, :stayed
 
       def initialize(cards)
         @cards = cards
         @card_values = cards.map { |c| CardValue.new(c) }
+        @stayed = false
       end
 
       def blackjack?
