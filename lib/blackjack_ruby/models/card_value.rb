@@ -28,6 +28,16 @@ module BlackjackRuby
           [rank.to_i]
         end
       end
+
+      def best_score
+        if face_card_or_ten_card?
+          10
+        elsif ace_card?
+          11
+        else
+          rank.to_i
+        end
+      end
     end
   end
 end
