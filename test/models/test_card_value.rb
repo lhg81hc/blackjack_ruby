@@ -85,7 +85,7 @@ module TestCardValue
     end
 
     def test_order
-      expected_orders = [8, 9, 10, 10]
+      expected_orders = [8, 9, 10, 11]
       assert_equal expected_orders, @card_value_objects.map(&:order)
     end
 
@@ -104,39 +104,34 @@ end
 module TestCardValue
   class TestAceCards < Minitest::Test
     def setup
-      @ace_cards = ['a'].map do |rank|
-        OpenStruct.new(rank: OpenStruct.new(val: rank))
-      end
-
-      @card_value_objects = @ace_cards.map { |card| BlackjackRuby::Models::CardValue.new(card) }
+      @ace_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
+      @card_value_object = BlackjackRuby::Models::CardValue.new(@ace_card)
     end
 
-    def test_ranks
-      expected_ranks = ['a']
-      assert_equal expected_ranks, @card_value_objects.map(&:rank)
+    def test_rank
+      expected_rank = 'a'
+      assert_equal expected_rank, @card_value_object.rank
     end
 
     def test_face_card_or_ten_card
-      assert_equal [false], @card_value_objects.map(&:face_card_or_ten_card?)
+      assert_equal false, @card_value_object.face_card_or_ten_card?
     end
 
     def test_ace_card
-      assert_equal [true], @card_value_objects.map(&:ace_card?)
+      assert_equal true, @card_value_object.ace_card?
     end
 
     def test_order
-      expected_orders = [11]
-      assert_equal expected_orders, @card_value_objects.map(&:order)
+      assert_equal 12, @card_value_object.order
     end
 
     def test_blackjack_rank
-      expected_blackjack_ranks = ['a']
-      assert_equal expected_blackjack_ranks, @card_value_objects.map(&:blackjack_rank)
+      assert_equal 'a', @card_value_object.blackjack_rank
     end
 
     def test_scores
-      expected_scores = [[1, 10]]
-      assert_equal expected_scores, @card_value_objects.map(&:scores)
+      expected_scores = [1, 10]
+      assert_equal expected_scores, @card_value_object.scores
     end
   end
 end
