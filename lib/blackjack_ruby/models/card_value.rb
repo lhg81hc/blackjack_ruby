@@ -15,8 +15,8 @@ module BlackjackRuby
           '10' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 8 },
           'j' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 9 },
           'q' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 10 },
-          'k' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 10 },
-          'a' => { scores: [1, 10], blackjack_rank: 'a', face_card_or_ten_card: false, order: 11 },
+          'k' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 11 },
+          'a' => { scores: [1, 10], blackjack_rank: 'a', face_card_or_ten_card: false, order: 12 },
         }.freeze
 
       ACE_RANK = 'a'.freeze
@@ -37,29 +37,21 @@ module BlackjackRuby
         rank == ACE_RANK
       end
 
+      # #face_card_or_ten_card
+      # #order
+      # #blackjack_rank
+      # #scores
+      [:face_card_or_ten_card, :order, :blackjack_rank, :scores].each do |method_name|
+        define_method method_name do
+          val = MAP.dig(rank, method_name)
+          raise "Unknown rank #{rank}" if val.nil?
+
+          val
+        end
+      end
+
       def face_card_or_ten_card?
-        MAP[rank].fetch(:face_card_or_ten_card) == true
-      end
-
-      def order
-        val = MAP.dig(rank, :order)
-        raise 'Unknown rank' unless val
-
-        val
-      end
-
-      def blackjack_rank
-        val = MAP.dig(rank, :blackjack_rank)
-        raise 'Unknown rank' unless val
-
-        val
-      end
-
-      def scores
-        val = MAP.dig(rank, :scores)
-        raise 'Unknown rank' unless val
-
-        val
+        face_card_or_ten_card == true
       end
 
       def best_score
