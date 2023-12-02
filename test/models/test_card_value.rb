@@ -130,7 +130,7 @@ module TestCardValue
     end
 
     def test_scores
-      expected_scores = [1, 10]
+      expected_scores = [1, 11]
       assert_equal expected_scores, @card_value_object.scores
     end
   end

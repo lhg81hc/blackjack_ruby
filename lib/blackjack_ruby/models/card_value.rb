@@ -16,7 +16,7 @@ module BlackjackRuby
           'j' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 9 },
           'q' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 10 },
           'k' => { scores: [10], blackjack_rank: '10', face_card_or_ten_card: true, order: 11 },
-          'a' => { scores: [1, 10], blackjack_rank: 'a', face_card_or_ten_card: false, order: 12 },
+          'a' => { scores: [1, 11], blackjack_rank: 'a', face_card_or_ten_card: false, order: 12 },
         }.freeze
 
       ACE_RANK = 'a'.freeze
