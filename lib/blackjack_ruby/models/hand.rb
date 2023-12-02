@@ -77,6 +77,10 @@ module BlackjackRuby
         two_cards? && identical_rank_cards?
       end
 
+      def soft?
+        two_cards? && any_ace_card? && !blackjack?
+      end
+
       def identical_score_cards?
         card_scores.uniq.count == 1
       end
