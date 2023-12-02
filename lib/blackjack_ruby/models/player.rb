@@ -32,6 +32,13 @@ module BlackjackRuby
         hand.bet = hand.bet * 2
         hand.doubled = true
       end
+
+      def stay(hand_index)
+        hand = hands[hand_index]
+        raise 'Hand not found' unless hand
+
+        hand.stayed = true
+      end
     end
   end
 end
