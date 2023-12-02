@@ -11,9 +11,7 @@ module BlackjackRuby
       end
 
       def blackjack?
-        return false unless two_cards?
-
-        any_ace_card? && any_face_card_or_ten_card?
+        two_cards? && any_ace_card? && any_face_card_or_ten_card?
       end
 
       def five_card_charlie?
@@ -40,6 +38,8 @@ module BlackjackRuby
       def busted?
         scores.all? { |s| s > BUST_VALUE }
       end
+
+      alias :too_many? :busted?
 
       # Eg:
       # 'A3' => [3, 13]
