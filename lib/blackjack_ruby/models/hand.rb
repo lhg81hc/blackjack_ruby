@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module BlackjackRuby
   module Models
+    # Represent a hand in blackjack, can be player's hand or dealer's hand
     class Hand
       BUST_VALUE = 21
 
-      attr_accessor :cards, :card_values
       attr_accessor :cards, :card_values, :stayed
 
       def initialize(cards)
@@ -26,11 +28,7 @@ module BlackjackRuby
             best = scores.first
 
             scores.each do |s|
-              if best > 21 && s <= 21
-                best = s
-              elsif s <= 21 && s > best
-                best = s
-              end
+              best = s if (best > 21 && s <= 21) || (s <= 21 && s > best)
             end
 
             best
@@ -41,18 +39,14 @@ module BlackjackRuby
         scores.all? { |s| s > BUST_VALUE }
       end
 
-      alias :too_many? :bust?
+      alias too_many? bust?
 
       # Eg:
       # 'A3' => [3, 13]
       # 'AA' => [2, 12, 22]
       # '54' => [9]
       def scores
-        @scores ||=
-          card_scores[0].
-          product(*card_scores[1..-1]).
-          map(&:sum).
-          uniq
+        @scores ||= card_scores[0].product(*card_scores[1..]).map(&:sum).uniq
       end
 
       # Eg:
@@ -60,7 +54,7 @@ module BlackjackRuby
       # 'AA' => [[1, 11], [1, 11]]
       # '54' => [[5], [4]]
       def card_scores
-        @card_scores ||= card_values.map { |c| c.scores }
+        @card_scores ||= card_values.map(&:scores)
       end
 
       def two_cards?
@@ -88,15 +82,15 @@ module BlackjackRuby
       end
 
       def identical_rank_cards?
-        @card_values.map(&:rank).uniq.count == 1
+        card_values.map(&:rank).uniq.count == 1
       end
 
       def any_ace_card?
-        card_values.any? { |cv| cv.ace_card? }
+        card_values.any?(&:ace_card?)
       end
 
       def any_face_card_or_ten_card?
-        card_values.any? { |cv| cv.face_card_or_ten_card? }
+        card_values.any?(&:face_card_or_ten_card?)
       end
 
       # 'Hit me!'
