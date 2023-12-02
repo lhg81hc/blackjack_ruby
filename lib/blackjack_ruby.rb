@@ -14,6 +14,7 @@ require 'blackjack_ruby/models/player'
 require 'blackjack_ruby/strategies/base'
 require 'blackjack_ruby/strategies/pair_splitting_strategy'
 require 'blackjack_ruby/strategies/hard_totals_strategy'
+require 'blackjack_ruby/strategies/soft_totals_strategy'
 
 module BlackjackRuby
   class Error < StandardError; end
