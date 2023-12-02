@@ -35,11 +35,11 @@ module BlackjackRuby
           end
       end
 
-      def busted?
+      def bust?
         scores.all? { |s| s > BUST_VALUE }
       end
 
-      alias :too_many? :busted?
+      alias :too_many? :bust?
 
       # Eg:
       # 'A3' => [3, 13]

@@ -20,7 +20,7 @@ module BlackjackRuby
       end
 
       def can_stay?
-        blackjack? || busted? || enough?
+        blackjack? || bust? || enough?
       end
 
       def hard_seventeen?
