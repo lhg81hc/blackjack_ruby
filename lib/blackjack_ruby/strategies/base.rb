@@ -14,17 +14,11 @@ module BlackjackRuby
       end
 
       def dealer_up_card_rank
-        @dealer_up_card_rank ||=
-          begin
-            up_card_value = Models::CardValue.new(dealer_up_card)
-            up_card_value.face_card_or_ten_card? ? '10' : up_card_value.rank
-          end
+        @dealer_up_card_rank ||= Models::CardValue.new(dealer_up_card).blackjack_rank
       end
 
       def player_card_to_s
-        player_hand.card_values.sort_by(&:best_score).reverse.map do |val|
-          val.face_card_or_ten_card? ? '10' : val.rank
-        end.join(',')
+        player_hand.card_values.sort_by(&:best_score).reverse.map(&:blackjack_rank).join(',')
       end
     end
   end
