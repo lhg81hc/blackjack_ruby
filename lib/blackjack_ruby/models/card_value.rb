@@ -19,6 +19,14 @@ module BlackjackRuby
         @rank ||= card.rank.val
       end
 
+      def blackjack_rank
+        if face_card_or_ten_card?
+          '10'
+        else
+          rank
+        end
+      end
+
       def scores
         if face_card_or_ten_card?
           [10]
