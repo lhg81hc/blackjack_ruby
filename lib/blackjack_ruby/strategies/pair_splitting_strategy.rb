@@ -18,12 +18,6 @@ module BlackjackRuby
         DEFAULT_STRATEGIES
       end
 
-      def player_card_to_s
-        player_hand.cards.map do |card|
-          ['j', 'q', 'k'].include?(card.rank.val) ? '10' : card.rank.val
-        end.join(',')
-      end
-
       def split?
         found = strategies[player_card_to_s][dealer_up_card_rank]
         raise 'Unknown move' unless found

@@ -20,6 +20,12 @@ module BlackjackRuby
             up_card_value.face_card_or_ten_card? ? '10' : up_card_value.rank
           end
       end
+
+      def player_card_to_s
+        player_hand.card_values.sort_by(&:best_score).reverse.map do |val|
+          val.face_card_or_ten_card? ? '10' : val.rank
+        end.join(',')
+      end
     end
   end
 end
