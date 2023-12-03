@@ -3,13 +3,12 @@ module BlackjackRuby
     class PlayerHand < Hand
       attr_writer :doubled
       attr_reader :initial_payout_odds
-      attr_accessor :bet, :stayed
+      attr_accessor :bet
 
       def initialize(cards)
         super
 
         @doubled = false
-        @stayed = false
         @initial_payout_odds = 1
         @bet = 0
       end
