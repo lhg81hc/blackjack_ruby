@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module BlackjackRuby
   module Models
+    # Representing a dealer hand
     class DealerHand < Hand
       attr_accessor :up_card
 
