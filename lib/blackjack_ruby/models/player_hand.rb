@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module BlackjackRuby
   module Models
+    # Represent a player hand
     class PlayerHand < Hand
       attr_writer :doubled
       attr_reader :initial_payout_odds
@@ -18,7 +21,7 @@ module BlackjackRuby
           'double' => can_double?,
           'hit' => can_hit?,
           'split' => can_split?,
-          'stay' => true,
+          'stay' => true
         }
       end
 
@@ -40,7 +43,7 @@ module BlackjackRuby
       end
 
       def payout_odds
-        blackjack? ? (initial_payout_odds.to_f * 3 / 2) : initial_payout_odds.to_f
+        blackjack? ? (initial_payout_odds.to_f * 2) : initial_payout_odds.to_f
       end
     end
   end
