@@ -42,6 +42,10 @@ module BlackjackRuby
         @doubled
       end
 
+      def twenty_one?
+        scores.any? { |s| s == 21 }
+      end
+
       def payout_odds
         blackjack? ? (initial_payout_odds.to_f * 2) : initial_payout_odds.to_f
       end
