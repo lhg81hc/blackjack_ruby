@@ -1,8 +1,6 @@
 module BlackjackRuby
   module Models
     class Player
-      INITIAL_RESULT = 'Not Played'
-
       attr_reader :hands
 
       def initialize(hands)
