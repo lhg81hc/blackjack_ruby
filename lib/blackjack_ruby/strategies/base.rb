@@ -17,9 +17,9 @@ module BlackjackRuby
         @dealer_up_card_rank ||= Models::CardValue.new(dealer_up_card).blackjack_rank
       end
 
-      def player_card_to_s
-        @player_card_to_s ||=
-          player_hand.card_values.sort_by(&:best_score).reverse.map(&:blackjack_rank).join(',')
+      def player_card_ranks
+        @player_card_ranks ||=
+          player_hand.card_values.sort_by(&:order).reverse.map(&:blackjack_rank).join(',')
       end
     end
   end

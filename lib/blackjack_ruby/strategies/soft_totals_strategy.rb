@@ -17,7 +17,7 @@ module BlackjackRuby
       end
 
       def move
-        found = strategies[player_card_to_s][dealer_up_card_rank]
+        found = strategies[player_card_ranks][dealer_up_card_rank]
         raise 'Unknown move' unless found
 
         found
