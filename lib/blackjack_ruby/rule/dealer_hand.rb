@@ -1,9 +1,7 @@
 module BlackjackRuby
   module Rule
     class DealerHand
-      def hit_on_soft_seventeen
-        false
-      end
+      HIT_ON_SOFT_SEVENTEEN = true
     end
   end
 end
