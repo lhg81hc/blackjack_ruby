@@ -19,5 +19,18 @@ require 'blackjack_ruby/rule/config'
 
 module BlackjackRuby
   class Error < StandardError; end
-  # Your code goes here...
+
+  class << self
+    attr_accessor :rule_configuration
+
+    def new
+      @rule_configuration ||= Rule::Config::Builder.new
+      Models::Play.new(@rule_configuration)
+    end
+
+    def configure
+      @rule_configuration ||= Rule::Config::Builder.new
+      yield(@rule_configuration)
+    end
+  end
 end

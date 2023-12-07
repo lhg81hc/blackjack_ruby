@@ -7,9 +7,11 @@ module BlackjackRuby
       def option(name, options = {})
         attribute = options[:as] || name
 
+        puts name
+
         builder_class.instance_eval do
           if method_defined?(name)
-            Kernel.warn "Option #{name} already defined and will be overridden"
+            puts "Option #{name} already defined and will be overridden"
             remove_method name
           end
 
