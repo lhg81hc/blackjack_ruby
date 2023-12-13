@@ -6,6 +6,7 @@ require 'blackjack_ruby/config/abstract_builder'
 require 'blackjack_ruby/rule/dealer_hand'
 require 'blackjack_ruby/rule/hand_comparison'
 require 'blackjack_ruby/rule/player_hand'
+require 'blackjack_ruby/rule/shoe'
 
 module BlackjackRuby
   class Config
@@ -22,5 +23,6 @@ module BlackjackRuby
     option :blackjack_payout_odds,          default: BlackjackRuby::Rule::PlayerHand::BLACKJACK_PAYOUT_ODDS
     option :maximum_cards_allow_double,     default: BlackjackRuby::Rule::PlayerHand::MAXIMUM_CARDS_ALLOW_DOUBLE
     option :maximum_double_per_betting_box, default: BlackjackRuby::Rule::PlayerHand::MAXIMUM_DOUBLE_PER_BETTING_BOX
+    option :number_of_decks,                default: BlackjackRuby::Rule::Shoe::NUMBER_OF_DECKS
   end
 end
