@@ -15,22 +15,26 @@ require 'blackjack_ruby/strategies/base'
 require 'blackjack_ruby/strategies/pair_splitting_strategy'
 require 'blackjack_ruby/strategies/hard_totals_strategy'
 require 'blackjack_ruby/strategies/soft_totals_strategy'
-require 'blackjack_ruby/rule/config'
+require 'blackjack_ruby/config'
 
 module BlackjackRuby
   class Error < StandardError; end
 
   class << self
-    attr_accessor :rule_configuration
-
-    def new
-      @rule_configuration ||= Rule::Config::Builder.new
-      Models::Play.new(@rule_configuration)
+    def configure(&block)
+      @config = Config::Builder.new(&block).build
     end
 
-    def configure
-      @rule_configuration ||= Rule::Config::Builder.new
-      yield(@rule_configuration)
+    # @return [BlackjackRuby::Config] configuration instance
+    #
+    def configuration
+      @config || configure
     end
+
+    def configured?
+      !@config.nil?
+    end
+
+    alias config configuration
   end
 end
