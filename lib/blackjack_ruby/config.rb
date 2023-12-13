@@ -20,6 +20,7 @@ module BlackjackRuby
     option :five_card_charlie,              default: BlackjackRuby::Rule::HandComparison::FIVE_CARD_CHARLIE
     option :player_bj_wins_automatically,   default: BlackjackRuby::Rule::HandComparison::PLAYER_BJ_WINS_AUTOMATICALLY
     option :player_21_wins_automatically,   default: BlackjackRuby::Rule::HandComparison::PLAYER_21_WINS_AUTOMATICALLY
+    option :winner_when_same_best_score,    default: BlackjackRuby::Rule::HandComparison::WINNER_WHEN_SAME_BEST_SCORE
     option :blackjack_payout_odds,          default: BlackjackRuby::Rule::PlayerHand::BLACKJACK_PAYOUT_ODDS
     option :maximum_cards_allow_double,     default: BlackjackRuby::Rule::PlayerHand::MAXIMUM_CARDS_ALLOW_DOUBLE
     option :maximum_double_per_betting_box, default: BlackjackRuby::Rule::PlayerHand::MAXIMUM_DOUBLE_PER_BETTING_BOX
