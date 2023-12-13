@@ -19,6 +19,22 @@ module BlackjackRuby
         validate
       end
 
+      def winner
+        if player_wins?
+          return 1
+        end
+
+        if dealer_wins?
+          return 0
+        end
+
+        if same_best_score? || both_blackjack?
+          return BlackjackRuby.config.winner_when_same_best_score
+        end
+
+        raise 'Can not decide who wins'
+      end
+
       def both_blackjack?
         dealer_hand.blackjack? && player_hand.blackjack?
       end
@@ -35,29 +51,10 @@ module BlackjackRuby
 
       alias tie? push?
 
-      def winner
-        if player_wins?
-          return 1
-        end
-
-        if dealer_wins?
-          return 0
-        end
-
-        if same_best_score?
-          return 0
-        end
-
-        raise 'Can not decide who wins'
-      end
-
       def dealer_wins?
-        !player_wins_automatically? &&
-          (
-            player_hand.bust? ||
-            (dealer_hand.blackjack? && !player_hand.blackjack?) ||
-            (!dealer_hand.bust? && dealer_hand.best_score > player_hand.best_score)
-          )
+        player_hand.bust? ||
+          dealer_hand_is_bj_when_player_hand_is_not ||
+          (!dealer_hand.bust? && dealer_hand_best_score_is_closer_to_21)
       end
 
       def winner_translation
@@ -66,20 +63,46 @@ module BlackjackRuby
 
       def player_wins?
         player_wins_automatically? ||
-          (!player_hand.bust? && dealer_hand.bust?) ||
-          (!player_hand.bust? && !dealer_hand.bust? && player_hand.best_score > dealer_hand.best_score)
+          player_hand_is_bj_when_dealer_hand_is_not ||
+          dealer_hand_is_busted_when_player_hand_is_not ||
+          (dealer_hand_and_player_hand_are_both_not_busted && player_hand_best_score_is_closer_to_21)
       end
 
       def player_wins_automatically?
-        player_win_automatically_conditions.any?
+        player_wins_automatically_conditions.any?
       end
 
-      def player_win_automatically_conditions
-        [
-          player_hand.five_card_charlie?,
-          player_hand.blackjack?,
-          player_hand.twenty_one?
-        ]
+      def player_wins_automatically_conditions
+        conditions = []
+        conditions << player_hand.five_card_charlie? if BlackjackRuby.config.five_card_charlie
+        conditions << player_hand.blackjack? if BlackjackRuby.config.player_bj_wins_automatically
+        conditions << player_hand.twenty_one? if BlackjackRuby.config.player_21_wins_automatically
+
+        conditions
+      end
+
+      def dealer_hand_is_busted_when_player_hand_is_not
+        dealer_hand.bust? && !player_hand.bust?
+      end
+
+      def dealer_hand_and_player_hand_are_both_not_busted
+        !player_hand.bust? && !dealer_hand.bust?
+      end
+
+      def player_hand_best_score_is_closer_to_21
+        player_hand.best_score > dealer_hand.best_score
+      end
+
+      def dealer_hand_best_score_is_closer_to_21
+        dealer_hand.best_score > player_hand.best_score
+      end
+
+      def dealer_hand_is_bj_when_player_hand_is_not
+        dealer_hand.blackjack? && !player_hand.blackjack?
+      end
+
+      def player_hand_is_bj_when_dealer_hand_is_not
+        player_hand.blackjack? && !dealer_hand.blackjack?
       end
 
       def validate
