@@ -41,12 +41,9 @@ module BlackjackRuby
       # #order
       # #blackjack_rank
       # #scores
-      [:face_card_or_ten_card, :order, :blackjack_rank, :scores].each do |method_name|
-        define_method method_name do
-          val = MAP.dig(rank, method_name)
-          raise "Unknown rank #{rank}" if val.nil?
-
-          val
+      [:face_card_or_ten_card, :order, :blackjack_rank, :scores].each do |attr|
+        define_method attr do
+          MAP.dig(rank, attr)
         end
       end
 
