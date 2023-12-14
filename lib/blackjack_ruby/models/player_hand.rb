@@ -6,7 +6,7 @@ module BlackjackRuby
     class PlayerHand < Hand
       attr_writer :doubled
       attr_reader :initial_payout_odds
-      attr_accessor :bet
+      attr_accessor :bet, :betting_box_index
 
       def initialize(cards)
         super
@@ -14,6 +14,7 @@ module BlackjackRuby
         @doubled = false
         @initial_payout_odds = 1
         @bet = 0
+        @betting_box_index = nil
       end
 
       def options

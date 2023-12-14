@@ -16,6 +16,7 @@ module BlackjackRuby
         hand.cards.map.with_index do |card, index|
           new_hand = PlayerHand.new([card])
           new_hand.bet = hand.bet
+          new_hand.betting_box_index = hand.betting_box_index
 
           hands.insert(hand_index + index, new_hand)
         end
