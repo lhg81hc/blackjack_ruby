@@ -48,11 +48,7 @@ module BlackjackRuby
       end
 
       def face_card_or_ten_card?
-        face_card_or_ten_card == true
-      end
-
-      def best_score
-        scores.max
+        face_card_or_ten_card
       end
 
       private
