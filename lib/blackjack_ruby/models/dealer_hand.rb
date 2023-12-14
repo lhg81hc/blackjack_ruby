@@ -18,8 +18,7 @@ module BlackjackRuby
       end
 
       def enough?
-        # TODO: Add option to include soft_seventeen? or not
-        soft_seventeen? || hard_seventeen? || scores.any? { |s| s > 17 && s <= 21 }
+        (soft_seventeen? && can_stay_on_soft_seventeen) || hard_seventeen? || scores.any? { |s| s > 17 && s <= 21 }
       end
 
       def can_stay?
@@ -32,6 +31,10 @@ module BlackjackRuby
 
       def soft_seventeen?
         two_cards? && any_ace_card? && scores.any? { |s| s == 17 }
+      end
+
+      def can_stay_on_soft_seventeen
+        !BlackjackRuby.config.dealer_hits_on_soft_seventeen
       end
     end
   end

@@ -1,6 +1,6 @@
 module BlackjackRuby
   module Models
-    #Representing and evaluating the value of a card in a blackjack game
+    # Representing and evaluating the value of a card in a blackjack game
     class CardValue
       MAP =
         {
