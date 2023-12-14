@@ -34,8 +34,7 @@ module BlackjackRuby
       end
 
       def can_double?
-        # TODO: Add two_card? condition
-        can_hit?
+        can_hit? && (cards.count <= BlackjackRuby.config.maximum_cards_allow_double)
       end
 
       def doubled?
