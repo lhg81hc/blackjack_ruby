@@ -1,20 +1,18 @@
 # frozen_string_literal: true
 
 module BlackjackRuby
-  module Models
+  module Hand
     # Represent a player hand
-    class PlayerHand < Hand
+    class PlayerHand < AbstractHand
       attr_writer :doubled
+
       attr_reader :initial_payout_odds
-      attr_accessor :bet, :betting_box_index
+
+      attr_accessor :bet, :betting_box_index, :stayed
 
       def initialize(cards)
         super
-
-        @doubled = false
-        @initial_payout_odds = 1
-        @bet = 0
-        @betting_box_index = nil
+        initialize_default_attributes
       end
 
       def options
@@ -31,7 +29,7 @@ module BlackjackRuby
       end
 
       def can_hit?
-        !blackjack? && !doubled? && scores.any? { |s| s < Hand::BUST_VALUE }
+        !blackjack? && !doubled? && scores.any? { |s| s < AbstractHand::TARGET_SCORE }
       end
 
       def can_double?
@@ -48,6 +46,22 @@ module BlackjackRuby
 
       def payout_odds
         blackjack? ? BlackjackRuby.config.blackjack_payout_odds.to_f : initial_payout_odds.to_f
+      end
+
+      def five_card_charlie?
+        five_cards? && scores.any? { |s| s <= AbstractHand::TARGET_SCORE }
+      end
+
+      alias hit_me add_card
+
+      private
+
+      def initialize_default_attributes
+        @doubled = false
+        @stayed = false
+        @initial_payout_odds = 1
+        @bet = 0
+        @betting_box_index = nil
       end
     end
   end

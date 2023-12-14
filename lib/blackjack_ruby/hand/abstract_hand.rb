@@ -1,25 +1,22 @@
 # frozen_string_literal: true
 
-module BlackjackRuby
-  module Models
-    # Represent a hand in blackjack, can be player's hand or dealer's hand
-    class Hand
-      BUST_VALUE = 21
+require 'blackjack_ruby/models/card_value'
 
-      attr_accessor :cards, :card_values, :stayed
+module BlackjackRuby
+  module Hand
+    # Represent a hand in blackjack, can be player's hand or dealer's hand
+    class AbstractHand
+      TARGET_SCORE = 21
+
+      attr_accessor :cards, :card_values
 
       def initialize(cards)
         @cards = cards
-        @card_values = cards.map { |c| CardValue.new(c) }
-        @stayed = false
+        @card_values = cards.map { |c| Models::CardValue.new(c) }
       end
 
       def blackjack?
         two_cards? && any_ace_card? && any_face_card_or_ten_card?
-      end
-
-      def five_card_charlie?
-        five_cards? && scores.any? { |s| s <= 21 }
       end
 
       def best_score
@@ -28,7 +25,7 @@ module BlackjackRuby
             best = scores.first
 
             scores.each do |s|
-              best = s if (best > 21 && s <= 21) || (s <= 21 && s > best)
+              best = s if (best > TARGET_SCORE && s <= TARGET_SCORE) || (s <= TARGET_SCORE && s > best)
             end
 
             best
@@ -36,9 +33,8 @@ module BlackjackRuby
       end
 
       def bust?
-        scores.all? { |s| s > BUST_VALUE }
+        scores.all? { |s| s > TARGET_SCORE }
       end
-
       alias too_many? bust?
 
       # Eg:
@@ -93,12 +89,16 @@ module BlackjackRuby
         card_values.any?(&:face_card_or_ten_card?)
       end
 
-      # 'Hit me!'
       def add_card(new_card)
         @cards << new_card
-        @card_values << CardValue.new(new_card)
+        @card_values << Models::CardValue.new(new_card)
 
-        # Reset memoized values
+        reset_memoized_values
+      end
+
+      private
+
+      def reset_memoized_values
         @card_scores = nil
         @scores = nil
         @best_score = nil

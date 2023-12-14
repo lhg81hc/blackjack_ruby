@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 module BlackjackRuby
-  module Models
+  module Hand
     # Representing a dealer hand
-    class DealerHand < Hand
+    class DealerHand < AbstractHand
       attr_accessor :up_card
 
       def initialize(cards)
         super
+
         @up_card = cards.first
       end
 
@@ -26,11 +27,15 @@ module BlackjackRuby
       end
 
       def hard_seventeen?
-        (more_than_two_cards? || (two_cards? && any_face_card_or_ten_card?)) && scores.any? { |s| s == 17 }
+        (more_than_two_cards? || (two_cards? && any_face_card_or_ten_card?)) && seventeen?
       end
 
       def soft_seventeen?
-        two_cards? && any_ace_card? && scores.any? { |s| s == 17 }
+        two_cards? && any_ace_card? && seventeen?
+      end
+
+      def seventeen?
+        scores.any? { |s| s == 17 }
       end
 
       def can_stay_on_soft_seventeen?

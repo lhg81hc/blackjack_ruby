@@ -1,3 +1,5 @@
+require 'blackjack_ruby/hand/player_hand'
+
 module BlackjackRuby
   module Models
     class Player
@@ -14,7 +16,7 @@ module BlackjackRuby
         raise 'Hand is invalid to split' unless hand.options['split']
 
         hand.cards.map.with_index do |card, index|
-          new_hand = PlayerHand.new([card])
+          new_hand = Hand::PlayerHand.new([card])
           new_hand.bet = hand.bet
           new_hand.betting_box_index = hand.betting_box_index
 

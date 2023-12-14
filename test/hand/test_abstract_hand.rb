@@ -6,27 +6,27 @@ require 'ostruct'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
-module TestHand
+module TestAbstractHand
   class TestScoreEvaluation < Minitest::Test
     def setup
       first_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
       second_card = OpenStruct.new(rank: OpenStruct.new(val: '5'))
-      @hand_without_ace = BlackjackRuby::Models::Hand.new([first_card, second_card])
+      @hand_without_ace = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
 
       first_card = OpenStruct.new(rank: OpenStruct.new(val: '8'))
       second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
       third_card = OpenStruct.new(rank: OpenStruct.new(val: '2'))
-      @hand_with_one_ace = BlackjackRuby::Models::Hand.new([first_card, second_card])
+      @hand_with_one_ace = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
       @hand_with_one_ace.add_card(third_card)
 
       first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
       second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-      @hand_with_two_aces = BlackjackRuby::Models::Hand.new([first_card, second_card])
+      @hand_with_two_aces = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
 
       first_card = OpenStruct.new(rank: OpenStruct.new(val: '5'))
       second_card = OpenStruct.new(rank: OpenStruct.new(val: '5'))
       third_card = OpenStruct.new(rank: OpenStruct.new(val: '5'))
-      @hand_with_three_fives = BlackjackRuby::Models::Hand.new([first_card, second_card])
+      @hand_with_three_fives = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
       @hand_with_three_fives.add_card(third_card)
     end
 
@@ -66,7 +66,7 @@ module TestHand
       first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
       second_card = OpenStruct.new(rank: OpenStruct.new(val: '3'))
 
-      @hand = BlackjackRuby::Models::Hand.new([first_card, second_card])
+      @hand = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
     end
   end
 
@@ -133,7 +133,7 @@ module TestHand
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '8'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '8'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: '8'))
-    hand_identical_ranks = BlackjackRuby::Models::Hand.new([first_card, second_card])
+    hand_identical_ranks = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
     hand_identical_ranks.add_card(third_card)
 
     assert_equal true, hand_identical_ranks.identical_rank_cards?
@@ -143,7 +143,7 @@ module TestHand
     # Test when is a pair of ace cards
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    pair_of_aces_hand = BlackjackRuby::Models::Hand.new([first_card, second_card])
+    pair_of_aces_hand = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
 
     assert_equal true, pair_of_aces_hand.pair?
     assert_equal true, pair_of_aces_hand.soft?
@@ -154,7 +154,7 @@ module TestHand
     # Test when is a normal pair
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
-    normal_pair_hand = BlackjackRuby::Models::Hand.new([first_card, second_card])
+    normal_pair_hand = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
 
     assert_equal true, normal_pair_hand.pair?
     assert_equal false, normal_pair_hand.soft?
@@ -165,7 +165,7 @@ module TestHand
     # Test when is a soft hand
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '5'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    soft_hand = BlackjackRuby::Models::Hand.new([first_card, second_card])
+    soft_hand = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
 
     assert_equal false, soft_hand.pair?
     assert_equal true, soft_hand.soft?
@@ -176,7 +176,7 @@ module TestHand
     # Test when is a blackjack hand
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'j'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    blackjack_hand = BlackjackRuby::Models::Hand.new([first_card, second_card])
+    blackjack_hand = BlackjackRuby::Hand::AbstractHand.new([first_card, second_card])
 
     assert_equal false, blackjack_hand.pair?
     assert_equal false, blackjack_hand.soft?

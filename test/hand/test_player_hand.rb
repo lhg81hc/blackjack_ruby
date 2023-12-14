@@ -10,7 +10,7 @@ class TestPlayerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
 
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
     assert_equal true, hand.can_split?
     assert_equal true, hand.options['hit']
   end
@@ -19,7 +19,7 @@ class TestPlayerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
 
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
     assert_equal true, hand.can_split?
     assert_equal true, hand.options['split']
   end
@@ -28,7 +28,7 @@ class TestPlayerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '10'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'j'))
 
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
     assert_equal true, hand.can_split?
     assert_equal true, hand.options['split']
   end
@@ -36,7 +36,7 @@ class TestPlayerHand < Minitest::Test
   def test_can_not_plit_unless_pair
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'q'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '3'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
 
     assert_equal false, hand.can_split?
     assert_equal false, hand.options['split']
@@ -46,7 +46,7 @@ class TestPlayerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
     hand.add_card(third_card)
 
     assert_equal false, hand.can_split?
@@ -56,7 +56,7 @@ class TestPlayerHand < Minitest::Test
   def test_can_hit_and_can_double
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '8'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '2'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
 
     assert_equal true, hand.can_hit?
     assert_equal true, hand.options['hit']
@@ -67,7 +67,7 @@ class TestPlayerHand < Minitest::Test
   def test_can_hit_and_can_double_when_blackjack
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'q'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
 
     assert_equal false, hand.can_hit?
     assert_equal false, hand.options['hit']
@@ -78,7 +78,7 @@ class TestPlayerHand < Minitest::Test
   def test_can_hit_and_can_double_when_already_double
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '2'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '9'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
     hand.doubled = true
 
     assert_equal false, hand.can_hit?
@@ -91,7 +91,7 @@ class TestPlayerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
     hand.add_card(third_card)
 
     assert_equal false, hand.can_hit?
@@ -103,7 +103,7 @@ class TestPlayerHand < Minitest::Test
   def test_payout_odds_when_blackjack
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
 
     assert_equal 2.0, hand.payout_odds
   end
@@ -111,7 +111,7 @@ class TestPlayerHand < Minitest::Test
   def test_payout_odds_when_normal_hand
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
 
     assert_equal 1.0, hand.payout_odds
   end
@@ -119,7 +119,7 @@ class TestPlayerHand < Minitest::Test
   def test_doubled?
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '7'))
-    hand = BlackjackRuby::Models::PlayerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
 
     assert_equal false, hand.doubled?
 

@@ -11,21 +11,21 @@ class TestDealerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
 
-    soft_seventeen_hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    soft_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
     assert_equal true, soft_seventeen_hand.soft_seventeen?
     assert_equal false, soft_seventeen_hand.hard_seventeen?
 
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '7'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '10'))
 
-    hard_seventeen_hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    hard_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
     assert_equal false, hard_seventeen_hand.soft_seventeen?
     assert_equal true, hard_seventeen_hand.hard_seventeen?
 
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
 
-    random_hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    random_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
     assert_equal false, random_hand.soft_seventeen?
     assert_equal false, random_hand.hard_seventeen?
   end
@@ -33,8 +33,11 @@ class TestDealerHand < Minitest::Test
   def test_enough_when_soft_seventeen
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
+    BlackjackRuby.configure do
+      dealer_hits_on_soft_seventeen false
+    end
 
-    soft_seventeen_hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    soft_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
     assert_equal true, soft_seventeen_hand.soft_seventeen?
     assert_equal true, soft_seventeen_hand.enough?
   end
@@ -43,7 +46,7 @@ class TestDealerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '7'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
 
-    hard_seventeen_hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    hard_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
 
     assert_equal true, hard_seventeen_hand.hard_seventeen?
     assert_equal true, hard_seventeen_hand.enough?
@@ -56,7 +59,7 @@ class TestDealerHand < Minitest::Test
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
 
-    hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card, third_card])
+    hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card, third_card])
 
     assert_equal false, hand.hard_seventeen?
     assert_equal false, hand.soft_seventeen?
@@ -69,7 +72,7 @@ class TestDealerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
 
-    hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
     assert_equal [12], hand.scores
     assert_equal false, hand.enough?
     assert_equal false, hand.can_stay?
@@ -81,7 +84,7 @@ class TestDealerHand < Minitest::Test
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: '7'))
 
-    hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card, third_card])
+    hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card, third_card])
     assert_equal [23], hand.scores
     assert_equal false, hand.enough?
     assert_equal true, hand.can_stay?
@@ -91,7 +94,7 @@ class TestDealerHand < Minitest::Test
   def test_can_stay_when_blackjack
     first_card = OpenStruct.new(rank: OpenStruct.new(val: '10'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card])
+    hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
 
     assert_equal true, hand.blackjack?
     assert_equal true, hand.can_stay?
@@ -102,7 +105,7 @@ class TestDealerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'j'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: 'j'))
-    hand = BlackjackRuby::Models::DealerHand.new([first_card, second_card, third_card])
+    hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card, third_card])
 
     assert_equal true, hand.bust?
     assert_equal true, hand.can_stay?
