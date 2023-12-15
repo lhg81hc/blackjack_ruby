@@ -36,5 +36,9 @@ module BlackjackRuby
     end
 
     alias config configuration
+
+    def play
+      BlackjackRuby::Models::Play.new
+    end
   end
 end
