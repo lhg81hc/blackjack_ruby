@@ -10,7 +10,7 @@ module BlackjackRuby
       def initialize(index: nil, bet: nil)
         @index = index
         @bet = bet
-        @player_hands = []
+        @player_hands = nil
 
         validate
       end
@@ -21,6 +21,7 @@ module BlackjackRuby
             new_hand = Hand::PlayerHand.new(cards)
             new_hand.bet = bet
             new_hand.betting_box = self
+            new_hand
           end
       end
 
@@ -30,7 +31,6 @@ module BlackjackRuby
 
       def split(hand_index)
         hand = find_and_delete_hand!(hand_index)
-
         raise 'Hand is invalid to split' unless hand.valid_to_split?
 
         hand.cards.map.with_index do |card, index|
