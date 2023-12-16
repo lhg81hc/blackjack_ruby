@@ -4,40 +4,44 @@ module BlackjackRuby
   module Hand
     # Represent a player hand
     class PlayerHand < AbstractHand
-      attr_writer :doubled
+      attr_writer :doubled, :stayed
 
       attr_reader :initial_payout_odds
 
-      attr_accessor :bet, :betting_box_index, :stayed
+      attr_accessor :bet, :betting_box
 
       def initialize(cards)
         super
         initialize_default_attributes
       end
 
-      def options
-        {
-          'double' => can_double?,
-          'hit' => can_hit?,
-          'split' => can_split?,
-          'stay' => true
-        }
-      end
-
+      # def options
+      #   {
+      #     'double' => can_double?,
+      #     'hit' => can_hit?,
+      #     'split' => can_split?,
+      #     'stay' => true
+      #   }
+      # end
+      #
       def can_split?
-        two_cards? && identical_score_cards?
+        valid_to_split? && betting_box.total_hands <= BlackjackRuby.config.maximum_splitting_per_betting_box
       end
 
       def can_hit?
-        !blackjack? && !doubled? && scores.any? { |s| s < AbstractHand::TARGET_SCORE }
+        !blackjack? && !doubled? && any_score_under_21?
       end
 
       def can_double?
-        can_hit? && (cards.count <= BlackjackRuby.config.maximum_cards_allow_double)
+        can_hit? && valid_number_of_cards_to_double?
       end
 
       def doubled?
         @doubled
+      end
+
+      def stayed?
+        @stayed
       end
 
       def twenty_one?
@@ -52,6 +56,27 @@ module BlackjackRuby
         five_cards? && scores.any? { |s| s <= AbstractHand::TARGET_SCORE }
       end
 
+      def any_score_under_21?
+        scores.any? { |s| s < AbstractHand::TARGET_SCORE }
+      end
+
+      def valid_number_of_cards_to_double?
+        cards.count <= BlackjackRuby.config.maximum_cards_allow_double
+      end
+
+      def valid_to_split?
+        two_cards? && identical_score_cards?
+      end
+
+      def valid_to_double?
+        !blackjack? && !doubled? && any_score_under_21? && valid_number_of_cards_to_double?
+      end
+
+      def double
+        @bet = @bet * 2
+        @doubled = true
+      end
+
       alias hit_me add_card
 
       private
@@ -61,7 +86,7 @@ module BlackjackRuby
         @stayed = false
         @initial_payout_odds = 1
         @bet = 0
-        @betting_box_index = nil
+        @betting_box = nil
       end
     end
   end
