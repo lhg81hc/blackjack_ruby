@@ -26,7 +26,7 @@ module BlackjackRuby
       end
 
       def total_hands
-        player_hands.count
+        player_hands.nil? ? 0 : player_hands.count
       end
 
       def split(hand_index)
