@@ -6,11 +6,16 @@ require 'ostruct'
 
 # rubocop:disable Metrics/AbcSize
 class TestPlayerHand < Minitest::Test
+  def setup
+    @betting_box = BlackjackRuby::Models::BettingBox.new(index: 0, bet: 1)
+  end
+
   def test_can_split_when_pair_of_aces
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
 
     hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
+    hand.betting_box = @betting_box
     assert_equal true, hand.can_split?
     assert_equal true, hand.options['hit']
   end
@@ -20,6 +25,7 @@ class TestPlayerHand < Minitest::Test
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
 
     hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
+    hand.betting_box = @betting_box
     assert_equal true, hand.can_split?
     assert_equal true, hand.options['split']
   end
@@ -29,6 +35,7 @@ class TestPlayerHand < Minitest::Test
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'j'))
 
     hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
+    hand.betting_box = @betting_box
     assert_equal true, hand.can_split?
     assert_equal true, hand.options['split']
   end
@@ -37,6 +44,7 @@ class TestPlayerHand < Minitest::Test
     first_card = OpenStruct.new(rank: OpenStruct.new(val: 'q'))
     second_card = OpenStruct.new(rank: OpenStruct.new(val: '3'))
     hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
+    hand.betting_box = @betting_box
 
     assert_equal false, hand.can_split?
     assert_equal false, hand.options['split']
@@ -47,6 +55,7 @@ class TestPlayerHand < Minitest::Test
     second_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
     third_card = OpenStruct.new(rank: OpenStruct.new(val: 'k'))
     hand = BlackjackRuby::Hand::PlayerHand.new([first_card, second_card])
+    hand.betting_box = @betting_box
     hand.add_card(third_card)
 
     assert_equal false, hand.can_split?
