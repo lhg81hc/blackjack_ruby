@@ -10,13 +10,15 @@ module BlackjackRuby
       def initialize(index: nil, bet: nil)
         @index = index
         @bet = bet
-        @player_hands = nil
+        @player_hands = []
 
         validate
       end
 
       def deal_initial_hand(cards)
-        @player_hands ||=
+        raise 'Already dealt the initial hand' if total_hands > 0
+
+        @player_hands =
           Array.new(1) do
             new_hand = Hand::PlayerHand.new(cards)
             new_hand.bet = bet
@@ -26,7 +28,7 @@ module BlackjackRuby
       end
 
       def total_hands
-        player_hands.nil? ? 0 : player_hands.count
+        player_hands.count
       end
 
       def split(hand_index)
