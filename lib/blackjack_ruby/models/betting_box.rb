@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'deck_of_cards_ruby'
-
 module BlackjackRuby
   module Models
     class BettingBox
