@@ -16,6 +16,7 @@ require 'blackjack_ruby/strategies/hard_totals_strategy'
 require 'blackjack_ruby/strategies/soft_totals_strategy'
 require 'blackjack_ruby/config'
 require 'blackjack_ruby/models/betting_box'
+require 'blackjack_ruby/models/round'
 
 module BlackjackRuby
   class Error < StandardError; end
