@@ -2,6 +2,7 @@
 
 module BlackjackRuby
   module Models
+    # Represents a betting box in blackjack table
     class BettingBox
       attr_reader :index, :bet, :player_hands
 
@@ -14,7 +15,7 @@ module BlackjackRuby
       end
 
       def deal_initial_hand(cards)
-        raise 'Already dealt the initial hand' if total_hands > 0
+        raise 'Already dealt the initial hand' if total_hands.positive?
 
         @player_hands =
           Array.new(1) do
