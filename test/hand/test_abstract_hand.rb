@@ -92,11 +92,13 @@ module TestHand
 
   def test_bust
     assert_equal false, @hand.bust?
+    assert_equal false, @hand.too_many?
 
     @hand.add_card(OpenStruct.new(rank: OpenStruct.new(val: '10')))
     @hand.add_card(OpenStruct.new(rank: OpenStruct.new(val: '9')))
 
     assert_equal true, @hand.bust?
+    assert_equal true, @hand.too_many?
   end
 
   def test_card_counting_methods

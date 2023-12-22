@@ -7,27 +7,12 @@ require 'ostruct'
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 class TestDealerHand < Minitest::Test
-  def test_soft_seventeen_and_hard_seventeen
-    first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
-    second_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
+  def test_initialize
+    first_card = OpenStruct.new(rank: OpenStruct.new(val: '5'))
+    second_card = OpenStruct.new(rank: OpenStruct.new(val: 'j'))
+    hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
 
-    soft_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
-    assert_equal true, soft_seventeen_hand.soft_seventeen?
-    assert_equal false, soft_seventeen_hand.hard_seventeen?
-
-    first_card = OpenStruct.new(rank: OpenStruct.new(val: '7'))
-    second_card = OpenStruct.new(rank: OpenStruct.new(val: '10'))
-
-    hard_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
-    assert_equal false, hard_seventeen_hand.soft_seventeen?
-    assert_equal true, hard_seventeen_hand.hard_seventeen?
-
-    first_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
-    second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
-
-    random_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
-    assert_equal false, random_hand.soft_seventeen?
-    assert_equal false, random_hand.hard_seventeen?
+    assert_equal first_card, hand.up_card
   end
 
   def test_enough_when_soft_seventeen
@@ -111,6 +96,30 @@ class TestDealerHand < Minitest::Test
     assert_equal true, hand.can_stay?
     assert_equal true, hand.options['stay']
   end
+
+  def test_soft_seventeen_and_hard_seventeen
+    first_card = OpenStruct.new(rank: OpenStruct.new(val: 'a'))
+    second_card = OpenStruct.new(rank: OpenStruct.new(val: '6'))
+
+    soft_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
+    assert_equal true, soft_seventeen_hand.soft_seventeen?
+    assert_equal false, soft_seventeen_hand.hard_seventeen?
+    assert_equal true, soft_seventeen_hand.seventeen?
+
+    first_card = OpenStruct.new(rank: OpenStruct.new(val: '7'))
+    second_card = OpenStruct.new(rank: OpenStruct.new(val: '10'))
+
+    hard_seventeen_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
+    assert_equal false, hard_seventeen_hand.soft_seventeen?
+    assert_equal true, hard_seventeen_hand.hard_seventeen?
+    assert_equal true, hard_seventeen_hand.seventeen?
+
+    first_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
+    second_card = OpenStruct.new(rank: OpenStruct.new(val: '4'))
+
+    random_hand = BlackjackRuby::Hand::DealerHand.new([first_card, second_card])
+    assert_equal false, random_hand.soft_seventeen?
+    assert_equal false, random_hand.hard_seventeen?
+    assert_equal false, random_hand.seventeen?
+  end
 end
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/MethodLength
