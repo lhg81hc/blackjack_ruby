@@ -31,9 +31,10 @@ module BlackjackRuby
       end
 
       def split(hand_index)
-        hand = find_and_delete_hand!(hand_index)
+        hand = find_hand!(hand_index)
         raise 'Hand is invalid to split' unless hand.valid_to_split?
 
+        hand = find_and_delete_hand!(hand_index)
         hand.cards.map.with_index do |card, index|
           new_hand = Hand::PlayerHand.new([card])
           new_hand.bet = hand.bet
