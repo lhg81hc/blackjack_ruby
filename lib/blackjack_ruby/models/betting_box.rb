@@ -42,11 +42,11 @@ module BlackjackRuby
         end
       end
 
-      def double(hand_index)
+      def double_down(hand_index)
         hand = find_hand!(hand_index)
         raise 'Hand is invalid to double' unless hand.valid_to_double?
 
-        hand.double
+        hand.double_down
       end
 
       def stay(hand_index)

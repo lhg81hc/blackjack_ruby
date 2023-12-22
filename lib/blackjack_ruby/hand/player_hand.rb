@@ -72,7 +72,7 @@ module BlackjackRuby
         !blackjack? && !doubled? && any_score_under_21? && valid_number_of_cards_to_double?
       end
 
-      def double
+      def double_down
         @bet = @bet * 2
         @doubled = true
       end
