@@ -4,11 +4,11 @@ module BlackjackRuby
   module Hand
     # Represent a player hand
     class PlayerHand < AbstractHand
-      attr_writer :doubled, :stayed
+      attr_writer :doubled, :completed
 
       attr_reader :initial_payout_odds
 
-      attr_accessor :bet, :betting_box
+      attr_accessor :bet, :betting_box, :stayed
 
       def initialize(cards)
         super
