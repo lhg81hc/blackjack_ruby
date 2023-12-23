@@ -10,7 +10,8 @@ module BlackjackRuby
       end
 
       def build_strategies
-        raise 'Undefined'
+        {}
+        # raise 'Undefined'
       end
 
       def dealer_up_card_rank
