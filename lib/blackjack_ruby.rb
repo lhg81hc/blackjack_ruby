@@ -39,8 +39,8 @@ module BlackjackRuby
 
     alias config configuration
 
-    def play
-      BlackjackRuby::Models::Play.new
+    def play_auto(number_of_games: 1)
+      BlackjackRuby::Models::Play.new.auto(number_of_games: number_of_games)
     end
   end
 end
