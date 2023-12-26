@@ -15,27 +15,6 @@ module BlackjackRuby
         initialize_default_attributes
       end
 
-      # def options
-      #   {
-      #     'double' => can_double?,
-      #     'hit' => can_hit?,
-      #     'split' => can_split?,
-      #     'stay' => true
-      #   }
-      # end
-      #
-      def can_split?
-        valid_to_split? && betting_box.total_hands <= BlackjackRuby.config.maximum_splitting_per_betting_box
-      end
-
-      def can_hit?
-        !blackjack? && !doubled? && any_score_under_21?
-      end
-
-      def can_double?
-        can_hit? && valid_number_of_cards_to_double?
-      end
-
       def doubled?
         @doubled
       end
