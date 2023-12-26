@@ -4,11 +4,9 @@ module BlackjackRuby
   module Hand
     # Represent a player hand
     class PlayerHand < AbstractHand
-      attr_writer :doubled, :completed
-
       attr_reader :initial_payout_odds
 
-      attr_accessor :bet, :betting_box, :stayed
+      attr_accessor :bet, :betting_box, :stayed, :split, :doubled
 
       def initialize(cards)
         super
@@ -21,6 +19,10 @@ module BlackjackRuby
 
       def stayed?
         @stayed
+      end
+
+      def split?
+        @split
       end
 
       def twenty_one?
@@ -37,6 +39,10 @@ module BlackjackRuby
 
       def any_score_under_21?
         scores.any? { |s| s < AbstractHand::TARGET_SCORE }
+      end
+
+      def any_score_over_10?
+        scores.any? { |s| s > 10 }
       end
 
       def valid_number_of_cards_to_double?
@@ -63,6 +69,7 @@ module BlackjackRuby
       def initialize_default_attributes
         @doubled = false
         @stayed = false
+        @split = false
         @initial_payout_odds = 1
         @bet = 0
         @betting_box = nil
