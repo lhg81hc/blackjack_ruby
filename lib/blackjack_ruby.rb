@@ -18,6 +18,7 @@ require 'blackjack_ruby/strategies/finder'
 require 'blackjack_ruby/config'
 require 'blackjack_ruby/models/betting_box'
 require 'blackjack_ruby/models/round'
+require 'blackjack_ruby/models/player_option'
 
 module BlackjackRuby
   class Error < StandardError; end
