@@ -65,8 +65,8 @@ module BlackjackRuby
       private
 
       def validate
-        raise 'Index is invalid' unless index.is_a?(Integer) && index >= 0 && index <= 8
-        raise 'Bet is invalid' if @bet.nil?
+        raise 'Index is invalid' unless index.is_a?(Integer) && (0..8).include?(index)
+        raise 'Bet is invalid' if @bet.nil? || !@bet.positive?
       end
 
       def find_hand!(hand_index)
