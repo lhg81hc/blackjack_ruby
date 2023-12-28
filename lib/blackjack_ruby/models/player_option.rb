@@ -15,7 +15,8 @@ module BlackjackRuby
       def_delegators :@player_hand,
                      :betting_box, :blackjack?, :doubled?, :split?, :two_cards?,
                      :any_score_over_10?, :any_score_under_21?,
-                     :valid_number_of_cards_to_double?, :valid_to_split?
+                     :valid_number_of_cards_to_double?, :valid_to_split?,
+                     :two_card?, :more_than_two_cards?
 
       def options
         {
@@ -40,7 +41,7 @@ module BlackjackRuby
       end
 
       def can_stay?
-        any_score_over_10?
+        two_cards? || more_than_two_cards?
       end
 
       def can_surrender?
