@@ -14,9 +14,11 @@ module BlackjackRuby
       def_delegators :@dealer_hand, :blackjack?, :bust?, :enough?
 
       def options
-        {
-          'stay' => can_stay?
-        }
+        if can_stay?
+          ['stay']
+        else
+          []
+        end
       end
 
       def can_stay?

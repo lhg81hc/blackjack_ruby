@@ -19,13 +19,15 @@ module BlackjackRuby
                      :two_card?, :more_than_two_cards?
 
       def options
-        {
-          'double' => can_double?,
-          'hit' => can_hit?,
-          'split' => can_split?,
-          'stay' => can_stay?,
-          'surrender' => can_surrender?
-        }
+        r = []
+
+        r << 'double' if can_double?
+        r << 'hit' if can_hit?
+        r << 'split' if can_split?
+        r << 'stay' if can_stay?
+        r << 'surrender' if can_surrender?
+
+        r
       end
 
       def can_split?
