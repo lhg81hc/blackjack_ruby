@@ -13,7 +13,7 @@ module BlackjackRuby
       end
 
       def_delegators :@player_hand,
-                     :betting_box, :blackjack?, :doubled?, :split?, :two_cards?,
+                     :betting_box, :blackjack?, :doubled?, :split?, :surrendered?, :two_cards?,
                      :any_score_over_10?, :any_score_under_21?,
                      :valid_number_of_cards_to_double?, :valid_to_split?,
                      :two_card?, :more_than_two_cards?
@@ -54,7 +54,7 @@ module BlackjackRuby
         two_cards? &&
           !doubled? &&
           !split? &&
-          !surrendered &&
+          !surrendered? &&
           (
             (allowed_to_surrender_versus_2_to_9 && dealer_up_card_value.two_to_nine_card?) ||
               (allowed_to_surrender_versus_10 && dealer_up_card_value.face_card_or_ten_card?) ||
@@ -72,11 +72,11 @@ module BlackjackRuby
       end
 
       def allowed_to_late_surrender_versus_10
-        BlackjackRuby.config.allowed_to_surrender_versus_10 == 'late'
+        BlackjackRuby.config.player_surrenders_versus_10 == 'late'
       end
 
       def allowed_to_early_surrender_versus_10
-        BlackjackRuby.config.allowed_to_surrender_versus_10 == 'early'
+        BlackjackRuby.config.player_surrenders_versus_10 == 'early'
       end
 
       def allowed_to_surrender_versus_ace
@@ -84,11 +84,11 @@ module BlackjackRuby
       end
 
       def allowed_to_late_surrender_versus_ace
-        BlackjackRuby.config.allowed_to_surrender_versus_ace == 'late'
+        BlackjackRuby.config.player_surrenders_versus_ace == 'late'
       end
 
       def allowed_to_early_surrender_versus_ace
-        BlackjackRuby.config.allowed_to_surrender_versus_ace == 'early'
+        BlackjackRuby.config.player_surrenders_versus_ace == 'early'
       end
     end
   end
