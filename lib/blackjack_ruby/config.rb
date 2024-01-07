@@ -25,6 +25,9 @@ module BlackjackRuby
     option :blackjack_payout_odds,             default: BlackjackRuby::Rule::PlayerHand::BLACKJACK_PAYOUT_ODDS
     option :maximum_cards_allow_double,        default: BlackjackRuby::Rule::PlayerHand::MAXIMUM_CARDS_ALLOW_DOUBLE
     option :maximum_splitting_per_betting_box, default: BlackjackRuby::Rule::PlayerHand::MAXIMUM_SPLITTING_PER_BETTING_BOX
+    option :player_surrenders_versus_2_to_9,   default: BlackjackRuby::Rule::PlayerHand::PLAYER_SURRENDERS_VERSUS_2_to_9
+    option :player_surrenders_versus_10,       default: BlackjackRuby::Rule::PlayerHand::PLAYER_SURRENDERS_VERSUS_10
+    option :player_surrenders_versus_ace,      default: BlackjackRuby::Rule::PlayerHand::PLAYER_SURRENDERS_VERSUS_ACE
     option :number_of_decks,                   default: BlackjackRuby::Rule::Shoe::NUMBER_OF_DECKS
   end
 end

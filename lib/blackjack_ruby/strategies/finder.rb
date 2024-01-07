@@ -1,7 +1,7 @@
 module BlackjackRuby
   module Strategies
     class Finder < Base
-      # Order of the array is also the order for the look up
+      # The array's order is also the order for the look up
       STRATEGIES = [
         PairSplittingStrategy,
         SoftTotalsStrategy,

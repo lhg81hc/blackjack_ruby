@@ -46,8 +46,49 @@ module BlackjackRuby
         two_cards? || more_than_two_cards?
       end
 
+      def dealer_up_card_value
+        @dealer_upcard_value ||= Models::CardValue.new(dealer_up_card)
+      end
+
       def can_surrender?
-        two_cards? && !doubled? && !split? && Models::CardValue.new(dealer_up_card).ace_card?
+        two_cards? &&
+          !doubled? &&
+          !split? &&
+          !surrendered &&
+          (
+            (allowed_to_surrender_versus_2_to_9 && dealer_up_card_value.two_to_nine_card?) ||
+              (allowed_to_surrender_versus_10 && dealer_up_card_value.face_card_or_ten_card?) ||
+              (allowed_to_surrender_versus_ace && dealer_up_card_value.ace_card?)
+          )
+
+      end
+
+      def allowed_to_surrender_versus_2_to_9
+        BlackjackRuby.config.player_surrenders_versus_2_to_9
+      end
+
+      def allowed_to_surrender_versus_10
+        allowed_to_late_surrender_versus_10 || allowed_to_early_surrender_versus_10
+      end
+
+      def allowed_to_late_surrender_versus_10
+        BlackjackRuby.config.allowed_to_surrender_versus_10 == 'late'
+      end
+
+      def allowed_to_early_surrender_versus_10
+        BlackjackRuby.config.allowed_to_surrender_versus_10 == 'early'
+      end
+
+      def allowed_to_surrender_versus_ace
+        allowed_to_late_surrender_versus_ace || allowed_to_early_surrender_versus_ace
+      end
+
+      def allowed_to_late_surrender_versus_ace
+        BlackjackRuby.config.allowed_to_surrender_versus_ace == 'late'
+      end
+
+      def allowed_to_early_surrender_versus_ace
+        BlackjackRuby.config.allowed_to_surrender_versus_ace == 'early'
       end
     end
   end

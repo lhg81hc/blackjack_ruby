@@ -6,7 +6,7 @@ module BlackjackRuby
     class PlayerHand < AbstractHand
       attr_reader :initial_payout_odds
 
-      attr_accessor :bet, :betting_box, :stayed, :split, :doubled
+      attr_accessor :bet, :betting_box, :stayed, :split, :doubled, :surrendered
 
       def initialize(cards)
         super
@@ -23,6 +23,10 @@ module BlackjackRuby
 
       def split?
         @split
+      end
+
+      def surrendered?
+        @surrendered
       end
 
       def twenty_one?
@@ -62,6 +66,11 @@ module BlackjackRuby
         @doubled = true
       end
 
+      def surrender
+        @bet = (@bet / 2).to_f
+        @surrendered = true
+      end
+
       alias hit_me add_card
 
       private
@@ -70,6 +79,7 @@ module BlackjackRuby
         @doubled = false
         @stayed = false
         @split = false
+        @surrendered = false
         @initial_payout_odds = 1
         @bet = 0
         @betting_box = nil
