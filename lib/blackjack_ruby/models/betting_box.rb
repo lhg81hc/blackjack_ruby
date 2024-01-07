@@ -38,7 +38,7 @@ module BlackjackRuby
         hand.cards.map.with_index do |card, index|
           new_hand = Hand::PlayerHand.new([card])
           new_hand.bet = hand.bet
-          new_hand.splitted = true
+          new_hand.split = true
           new_hand.betting_box = self
 
           player_hands.insert(hand_index + index, new_hand)
@@ -60,6 +60,11 @@ module BlackjackRuby
       def hit(hand_index, new_card)
         hand = find_hand!(hand_index)
         hand.add_card(new_card)
+      end
+
+      def surrender(hand_index)
+        hand = find_hand!(hand_index)
+        hand.surrender
       end
 
       private
