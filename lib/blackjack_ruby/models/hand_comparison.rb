@@ -20,6 +20,10 @@ module BlackjackRuby
       end
 
       def winner
+        if player_surrendered?
+          return 0
+        end
+
         if player_wins?
           return 1
         end
@@ -66,6 +70,10 @@ module BlackjackRuby
           player_hand_is_bj_when_dealer_hand_is_not ||
           dealer_hand_is_busted_when_player_hand_is_not ||
           (dealer_hand_and_player_hand_are_both_not_busted && player_hand_best_score_is_closer_to_21)
+      end
+
+      def player_surrendered?
+        player_hand.surrendered?
       end
 
       def player_wins_automatically?
